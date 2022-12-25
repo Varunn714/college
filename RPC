@@ -1,0 +1,75 @@
+sudp apt-get install rpcbind
+rpcinfo
+
+//Go to Home create folder RPC and inside that folder create file add.x
+
+//write the code in add.x file
+"
+struct numbers{
+int a;
+int b;
+};
+
+program ADD_PROG{
+	version ADD_VERS{
+		int add(numbers)=1;
+	}=1;
+}=0x25331111
+"
+//Save the file
+
+cd RPC/
+rpcgen -a -C add.x
+make -f Makefile.add
+
+//goto add_server.c and open with text editor
+// write code
+"
+result = argp->a + argp->b;
+return &result;
+"
+
+//goto add_client.c
+change (argc < 2) to (argc < 4)
+write number number in below print statement before /n
+add_prog_1 (host, atoi(argv[2]), atoi(argv[3]));
+
+//goto void add_prog_1 
+add parameters - int x, int y
+
+//write after the first #endif statement
+add_1_arg.a=x;
+add_1_arg.b=y;
+
+add else statement
+else
+{
+pritnf("Result is %d",*result_1)
+}
+
+//go to terminal
+make -f Makefile.add
+sudo ./add_server
+Enter Password
+
+
+// Open new terminal
+sudo ./add_client localhost 12 12
+
+//Done
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
