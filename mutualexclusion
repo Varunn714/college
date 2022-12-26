@@ -1,0 +1,39 @@
+                                                        ////Mutual Exclusion
+                                                        
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<dos.h>
+#include<time.h>
+int cs=0,pro=0;
+char key='a';
+double run=5;
+time_t t1,t2;
+void main(){
+    printf("ME");
+    printf("enter any key except q\n");
+    printf("press q to exit at any time");
+    while(key!='q'){
+        while(!kbhit()){
+            if(cs!=0){
+                t2 = time(NULL);
+                if((t2-t1)>run){
+                printf("Process %d",pro-1);
+                printf("Has left critical section");
+                cs=0;
+                }
+            }
+        }
+        key = getch();
+        if(key!='q'){
+            if(cs!=0){
+                printf("ERROR");
+            }else{
+            printf("process started");
+            cs=1;
+            pro++;
+            t1 = time(NULL);
+            }
+        }
+    }
+}
